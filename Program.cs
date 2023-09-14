@@ -93,7 +93,7 @@ internal class Program
 
     private static void GerarExtratoDAS(DAS _DAS)
     {
-        Console.BackgroundColor = ConsoleColor.Blue;
+        Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Cálculo da guia do DAS (Documento de Arrecadação do Simples Nacional)");
         Console.ResetColor();
 
@@ -105,13 +105,15 @@ internal class Program
             var displayNameAttribute = property.GetCustomAttribute<DisplayNameAttribute>();
             if (displayNameAttribute != null)
             {
-                string displayName = displayNameAttribute.DisplayName;
+                string displayName = displayNameAttribute.DisplayName.PadRight(30, '.');
                 object propertyValue = property.GetValue(_DAS) ?? "DisplayNameAttributeNotFound";
 
+                Console.Write($"{displayName}");
+
                 if (propertyValue.GetType() == typeof(decimal))
-                    Console.WriteLine($"{displayName}: {propertyValue:N2}");
+                    Console.WriteLine($"R${propertyValue:N2}");
                 else
-                    Console.WriteLine($"{displayName}: {propertyValue}");
+                    Console.WriteLine($"{propertyValue}");
             }
         }
     }
